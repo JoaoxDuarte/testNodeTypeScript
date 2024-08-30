@@ -1,0 +1,8 @@
+*.log
+jest.config.cjs
+coverage
+MeasureController.test.ts
+UploadMeasure.test.ts
+Dockerfile
+docker-compose.yml
+node_modules

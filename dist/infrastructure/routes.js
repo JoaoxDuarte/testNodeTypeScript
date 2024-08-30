@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const MeasureController_1 = require("./controllers/MeasureController");
+const UploadMeasure_1 = require("../application/UploadMeasure");
+const MeasureRepository_1 = require("../infrastructure/repositories/MeasureRepository");
+const GeminiService_1 = require("../infrastructure/services/GeminiService");
+const measureValidator_1 = require("../middlewares/measureValidator");
+const router = (0, express_1.Router)();
+const measureRepository = new MeasureRepository_1.MeasureRepository();
+const geminiService = new GeminiService_1.GeminiService();
+const uploadMeasure = new UploadMeasure_1.UploadMeasure(measureRepository, geminiService);
+const measureController = new MeasureController_1.MeasureController(uploadMeasure, measureRepository);
+// Rotas da Aplicação:
+router.post('/upload', measureValidator_1.validateMeasureAndSetDate, (req, res) => measureController.upload(req, res));
+router.get('/measures', (req, res) => measureController.list(req, res));
+router.get('/measures/:id', (req, res) => measureController.findById(req, res));
+router.put('/measures/:id', measureValidator_1.validateMeasureAndSetDate, (req, res) => measureController.update(req, res));
+router.delete('/measures/:id', (req, res) => measureController.delete(req, res));
+router.get('/:customer_code/list', (req, res) => measureController.listByCustomerCode(req, res));
+exports.default = router;

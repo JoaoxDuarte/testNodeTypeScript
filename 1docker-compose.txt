@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node_shopper_app
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+        #DB_PATH=/data/db.sqlite
+      - DB_PATH=/usr/src/app/database.sqlite

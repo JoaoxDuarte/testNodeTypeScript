@@ -1,0 +1,12 @@
+FROM alpine:latest
+
+RUN apk add --no-cache sqlite sqlite-dev
+
+
+
+VOLUME /data
+
+COPY . .
+
+# Comando padrão para iniciar o contêiner
+CMD ["sh"]
